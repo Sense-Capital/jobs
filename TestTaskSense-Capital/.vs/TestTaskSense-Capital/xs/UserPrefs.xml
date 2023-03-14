@@ -1,0 +1,27 @@
+﻿<Properties StartupConfiguration="{1A6E6A40-E187-43C9-BF1A-D46C0CDCFAAB}|Default">
+  <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workbench ActiveDocument="TestTaskSense-Capital/Controllers/XOGameController.cs">
+    <Files>
+      <File FileName="TestTaskSense-Capital/Controllers/XOGameController.cs" Line="52" Column="89" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="TestTaskSense-Capital" expanded="True">
+            <Node name="TestTaskSense-Capital" expanded="True">
+              <Node name="Controllers" expanded="True">
+                <Node name="XOGameController.cs" selected="True" />
+              </Node>
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.ItemProperties.TestTaskSense-Capital PreferredExecutionTarget="/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+</Properties>
