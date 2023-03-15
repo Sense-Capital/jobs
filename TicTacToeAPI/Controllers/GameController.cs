@@ -109,6 +109,19 @@ namespace TicTacToeAPI.Controllers
             game.Field[raw,column] = 1;
             game.Status = CheckStatus(game);
 
+            if (game.Status == Status.Player_Win)
+            {
+                int res1 = _gameRepository.Update(game.Token, game);
+                if (res1 == 1)
+                {
+                    return GetGameStatus(token);
+                }
+                else
+                {
+                    return BadRequest("Inner Server Error. Please Try Later");
+                }
+            }
+
             ComputerMove(game);
 
             int res = _gameRepository.Update(game.Token,game);
