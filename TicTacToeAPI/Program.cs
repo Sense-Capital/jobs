@@ -1,3 +1,7 @@
+using System.Data.SQLite;
+using TicTacToeAPI.Services;
+using TicTacToeAPI.Services.Interfaces;
+
 namespace TicTacToeAPI
 {
     public class Program
@@ -5,6 +9,13 @@ namespace TicTacToeAPI
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+
+            builder.Services.AddScoped<IUserRepository, UserRepository>();
+            builder.Services.AddScoped<IGameRepository, GameRepository>();
+            
+            builder.Services.AddControllers();
+
+            //ConfigureSqliteConnection();
 
             // Add services to the container.
             builder.Services.AddAuthorization();
@@ -22,30 +33,44 @@ namespace TicTacToeAPI
                 app.UseSwaggerUI();
             }
 
-            app.UseHttpsRedirection();
-
             app.UseAuthorization();
 
-            var summaries = new[]
-            {
-            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-        };
-
-            app.MapGet("/weatherforecast", (HttpContext httpContext) =>
-            {
-                var forecast = Enumerable.Range(1, 5).Select(index =>
-                    new WeatherForecast
-                    {
-                        Date = DateTime.Now.AddDays(index),
-                        TemperatureC = Random.Shared.Next(-20, 55),
-                        Summary = summaries[Random.Shared.Next(summaries.Length)]
-                    })
-                    .ToArray();
-                return forecast;
-            })
-            .WithName("GetWeatherForecast");
+            app.MapControllers();
 
             app.Run();
+        }
+
+        private static void ConfigureSqliteConnection()
+        {
+            string connectionString = "Data Source = tictactoe.db; Version = 3; Pooling = true; Max Pool Size = 100;";
+            SQLiteConnection connection = new SQLiteConnection(connectionString);
+            connection.Open();
+            PrepareSchema(connection);
+            connection.Close();
+        }
+
+        private static void PrepareSchema(SQLiteConnection connection)
+        {
+            SQLiteCommand command = new SQLiteCommand(connection);
+
+            command.CommandText = "DROP TABLE IF EXISTS Users";
+            command.ExecuteNonQuery();
+            command.CommandText = "DROP TABLE IF EXISTS Games";
+            command.ExecuteNonQuery();
+
+            command.CommandText =
+                    @"CREATE TABLE Users(
+                    Email TEXT PRIMARY KEY,
+                    Hash TEXT,
+                    Token TEXT)";
+            command.ExecuteNonQuery();
+
+            command.CommandText =
+                    @"CREATE TABLE Games(
+                    Token TEXT PRIMARY KEY,
+                    Field TEXT,
+                    Status TEXT)";
+            command.ExecuteNonQuery();
         }
     }
 }
