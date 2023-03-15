@@ -15,7 +15,7 @@ namespace TicTacToeAPI
             
             builder.Services.AddControllers();
 
-            //ConfigureSqliteConnection();
+            ConfigureSqliteConnection();
 
             // Add services to the container.
             builder.Services.AddAuthorization();
@@ -53,20 +53,20 @@ namespace TicTacToeAPI
         {
             SQLiteCommand command = new SQLiteCommand(connection);
 
-            command.CommandText = "DROP TABLE IF EXISTS Users";
-            command.ExecuteNonQuery();
-            command.CommandText = "DROP TABLE IF EXISTS Games";
-            command.ExecuteNonQuery();
+            //command.CommandText = "DROP TABLE IF EXISTS Users";
+            //command.ExecuteNonQuery();
+            //command.CommandText = "DROP TABLE IF EXISTS Games";
+            //command.ExecuteNonQuery();
 
             command.CommandText =
-                    @"CREATE TABLE Users(
+                    @"CREATE TABLE IF NOT EXISTS Users(
                     Email TEXT PRIMARY KEY,
                     Hash TEXT,
                     Token TEXT)";
             command.ExecuteNonQuery();
 
             command.CommandText =
-                    @"CREATE TABLE Games(
+                    @"CREATE TABLE IF NOT EXISTS Games(
                     Token TEXT PRIMARY KEY,
                     Field TEXT,
                     Status TEXT)";

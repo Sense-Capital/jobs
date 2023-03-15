@@ -22,7 +22,7 @@ namespace TicTacToeAPI.Controllers
             fieldSize = 3;
         }
 
-        [HttpPut("login")]
+        [HttpGet("login")]
         public ActionResult<string> LogIn(string email, string password)
         {
             User user = _userRepository.GetById(email);
